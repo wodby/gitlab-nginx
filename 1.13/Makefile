@@ -1,9 +1,9 @@
 -include env_make
 
-VERSION ?= 9-1.13
+VERSION ?= 1.13
 
 REPO = wodby/gitlab-nginx
-NAME = gitlab-9-nginx-1.13
+NAME = gitlab-nginx-$(VERSION)
 
 .PHONY: build test push shell run start stop logs clean release
 
