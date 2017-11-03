@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  pages:
+    image: wodby/gitlab
+    environment:
+      GITLAB_PAGES_DOMAIN: pages.gitlab.loc
+    command: /etc/init.d/pages
+
+  workhorse:
+    image: wodby/gitlab
+    command: /etc/init.d/workhorse
+
+  nginx:
+    image: $IMAGE
+    environment:
+      NGINX_GITLAB_PAGES_DOMAIN: pages.gitlab.loc
+    depends_on:
+      - workhorse
+      - pages
