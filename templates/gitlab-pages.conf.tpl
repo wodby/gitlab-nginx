@@ -2,7 +2,7 @@ server {
   listen 0.0.0.0:80;
   listen [::]:80 ipv6only=on;
 
-  server_name ~^.*{{ getenv "NGINX_GITLAB_PAGES_DOMAIN" }};
+  server_name ~^.*{{ getenv "NGINX_PAGES_SERVER_NAME_REGEX" }};
 
   include healthz.conf;
 

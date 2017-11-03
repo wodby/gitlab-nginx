@@ -2,7 +2,8 @@ ARG FROM_TAG
 
 FROM wodby/nginx:${FROM_TAG}
 
-ENV NGINX_GITLAB_PUBLIC_FILES_DIR="/mnt/data/public" \
+ENV NGINX_GITLAB_DATA_DIR="/mnt/data" \
+    NGINX_GITLAB_PUBLIC_FILES_DIR="/mnt/data/public" \
     NGINX_USER="git"
 
 USER root
@@ -24,6 +25,8 @@ RUN deluser nginx && \
     rm /etc/sudoers.d/nginx
 
 USER git
+
+WORKDIR ${NGINX_GITLAB_PUBLIC_FILES_DIR}
 
 COPY templates /etc/gotpl/
 COPY init /docker-entrypoint-init.d/
