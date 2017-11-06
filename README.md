@@ -28,3 +28,11 @@ See more at [wodby/nginx](https://github.com/wodby/nginx)
 | NGINX_SERVER_NAME              | default             |             |
 | NGINX_GITLAB_PAGES_DOMAIN      |                     |             |
 | NGINX_GITLAB_PAGES_HOST        | http://pages:8090/  |             |
+
+## Orchestration actions
+
+See more at [wodby/nginx](https://github.com/wodby/nginx)
+
+## Deployment
+
+Deploy GitLab to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).
