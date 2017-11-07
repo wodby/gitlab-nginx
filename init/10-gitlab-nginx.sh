@@ -6,8 +6,8 @@ if [[ -n "${DEBUG}" ]]; then
   set -x
 fi
 
+sudo fix-permissions.sh git git "${NGINX_GITLAB_DATA_DIR}"
 mkdir -p "${NGINX_GITLAB_PUBLIC_FILES_DIR}"
-sudo fix-permissions.sh git git "${NGINX_GITLAB_DATA_DIR}" "${NGINX_GITLAB_PUBLIC_FILES_DIR}"
 
 gotpl /etc/gotpl/gitlab.conf.tpl > /etc/nginx/conf.d/gitlab.conf
 
