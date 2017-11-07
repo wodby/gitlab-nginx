@@ -26,7 +26,7 @@ RUN deluser nginx && \
 
 USER git
 
-WORKDIR ${NGINX_GITLAB_PUBLIC_FILES_DIR}
+WORKDIR ${NGINX_GITLAB_DATA_DIR}
 
 COPY templates /etc/gotpl/
 COPY init /docker-entrypoint-init.d/
