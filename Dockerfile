@@ -2,6 +2,8 @@ ARG FROM_TAG
 
 FROM wodby/nginx:${FROM_TAG}
 
+ENV NGINX_USER="git"
+
 USER root
 
 ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/404.html /etc/nginx/gitlab/
