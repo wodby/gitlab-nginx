@@ -66,7 +66,7 @@ server {
   error_page 502 /502.html;
   error_page 503 /503.html;
   location ~ ^/(404|422|500|502|503)\.html$ {
-    root {{ getenv "NGINX_GITLAB_PUBLIC_FILES_DIR" }};
+    root /etc/nginx/gitlab;
     internal;
   }
 
