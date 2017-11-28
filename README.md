@@ -27,7 +27,7 @@ See more at [wodby/nginx](https://github.com/wodby/nginx)
 | NGINX_WORKHORSE_HOST           | workhorse:8181      |             |
 | NGINX_SERVER_NAME              | default             |             |
 | NGINX_GITLAB_PAGES_DOMAIN      |                     |             |
-| NGINX_GITLAB_PAGES_HOST        | http://pages:8090/  |             |
+| NGINX_GITLAB_PAGES_URL         | http://pages:8090/  |             |
 
 ## Orchestration actions
 

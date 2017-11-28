@@ -14,9 +14,9 @@ server {
 
     proxy_cache off;
 
-    proxy_pass {{ getenv "NGINX_GITLAB_PAGES_HOST" "pages:8090" }};
+    proxy_pass {{ getenv "NGINX_GITLAB_PAGES_URL" "http://pages:8090" }};
   }
 
-  error_page 403 /403.html;
-  error_page 404 /404.html;
+  error_page 403 /etc/nginx/gitlab/403.html;
+  error_page 404 /etc/nginx/gitlab/404.html;
 }
