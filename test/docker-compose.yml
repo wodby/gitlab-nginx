@@ -15,7 +15,7 @@ services:
     image: $IMAGE
     environment:
       DEBUG: 1
-      NGINX_GITLAB_PAGES_DOMAIN: pages.gitlab.loc
+      GITLAB_PAGES_DOMAIN: pages.gitlab.loc
     depends_on:
       - workhorse
       - pages

@@ -56,7 +56,9 @@ server {
     proxy_set_header    X-Forwarded-Proto   $scheme;
     proxy_set_header    Upgrade             $http_upgrade;
     proxy_set_header    Connection          $connection_upgrade_gitlab;
-
+{{ if (getenv "GITLAB_HTTPS") }}
+    proxy_set_header    X-Forwarded-Ssl     on;
+{{ end }}
     proxy_pass http://gitlab-workhorse;
   }
 

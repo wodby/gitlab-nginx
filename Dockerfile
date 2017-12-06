@@ -2,15 +2,18 @@ ARG FROM_TAG
 
 FROM wodby/nginx:${FROM_TAG}
 
-ENV NGINX_USER="git"
+ARG GITLAB_VER
+
+ENV GITLAB_VER="${GITLAB_VER}" \
+    NGINX_USER="git"
 
 USER root
 
-ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/404.html /etc/nginx/gitlab/
-ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/422.html /etc/nginx/gitlab/
-ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/500.html /etc/nginx/gitlab/
-ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/502.html /etc/nginx/gitlab/
-ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/master/public/503.html /etc/nginx/gitlab/
+ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/404.html /etc/nginx/gitlab/
+ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/422.html /etc/nginx/gitlab/
+ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/500.html /etc/nginx/gitlab/
+ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/502.html /etc/nginx/gitlab/
+ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/503.html /etc/nginx/gitlab/
 
 RUN deluser nginx && \
     addgroup -S -g 1000 git && \
