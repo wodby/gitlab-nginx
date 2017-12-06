@@ -7,7 +7,7 @@ GITLAB_MAJOR_VER ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+\.[0-9]+?')
 TAG ?= $(GITLAB_MAJOR_VER)-$(NGINX_VER)
 
 FROM_TAG = $(NGINX_VER)
-REPO = wodby/wordpress-nginx
+REPO = wodby/gitlab-nginx
 NAME = gitlab-$(GITLAB_VER)-nginx-$(NGINX_VER)
 
 ifneq ($(FROM_STABILITY_TAG),)
