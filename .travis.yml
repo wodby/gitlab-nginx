@@ -1,46 +1,35 @@
 language: bash
 
-sudo: required
-
 services:
   - docker
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.10.0
-    - DOCKER_VERSION=17.06.2
     - LATEST_TAG=10-1.13
-    - FROM_STABILITY_TAG=
   matrix:
     - GITLAB_VER=10.2.3 NGINX_VER=1.13 TAG=10-1.13
 
-install:
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce="${DOCKER_VERSION}~ce-0~ubuntu"
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-
 script:
-  - make && make test
+  - |
+    make
+    make test
 
-after_success: |
-  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+    if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+      docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
-    if [[ -n "${TRAVIS_TAG}" ]]; then
-      export STABILITY_TAG="${TRAVIS_TAG}"
+      if [[ -n "${TRAVIS_TAG}" ]]; then
+        export STABILITY_TAG="${TRAVIS_TAG}"
+      fi
+
+      make release
+
+      if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+        make release TAG="latest"
+      fi
     fi
-
-    make release
-
-    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-      make release TAG="latest"
-    fi
-  fi
 
 notifications:
   slack:
     on_failure: never
-    secure: "ktnsawH72pRk0SohLvrru51xfufiiqUMhJa1wNafBbkjVgjxPnjcEap5khqTQ/7ciFk4SkkJ7oBAdEsS/IQcNWaMyIWRlwz8u5CGGhntJNwFHEnAWYSbOY/oV55A8HSQxfwiTtZJlYp8pDpno1SmRw2bybpz6OspINWpBItbQudfHzlD1aO02xSXvAfOf1saRG1CBv66NXTlcxEmGB3+rN9Y0fA6ZWjvb9h6j8rPddIpLo6ouFEbU/hJyFl2474kspddawVnnZMBnrdgcdlWVcamIJPW/tN8NeZC2Ghq6gWcpYxw68LucTWAW3FaRCvaMTNdouCTDFTLWpbb6jrzxmhKYhnU2Of2g6bfsc0FtnbcpoCR/idAtCHFPlCCK3TpbJ8mWtL91PNKKY/kIk1DN8FEY3NRZCns7WaSuHzb8+ClZOtbpberhEL/zSg2vUjn2s6Wx+7Eo7SDJy4UMnPBJ1tK/G+PCozmaIUNb+lrqx+0kCVVdluqSu81Hr0AuQWbjMwZmue1rIxsxkcgGR/8KP0974Y0iqOlBW49W3EuXbp0BYrPVK8W+lpmIcpmiIC89nvAAkyo3Kw9FeoLr5o99lS0mQAz7wpXE/cmxyL6xSswa3Rz5cW+s/kTuhu56MQdFtYJYUfnEgwt/rv9dYvz8NXWyf7Kp8F1CandiywSPlE="
+    secure: |
+      ktnsawH72pRk0SohLvrru51xfufiiqUMhJa1wNafBbkjVgjxPnjcEap5khqTQ/7ciFk4SkkJ7oBAdEsS/IQcNWaMyIWRlwz8u5CGGhntJNwFHEnAWYSbOY/oV55A8HSQxfwiTtZJlYp8pDpno1SmRw2bybpz6OspINWpBItbQudfHzlD1aO02xSXvAfOf1saRG1CBv66NXTlcxEmGB3+rN9Y0fA6ZWjvb9h6j8rPddIpLo6ouFEbU/hJyFl2474kspddawVnnZMBnrdgcdlWVcamIJPW/tN8NeZC2Ghq6gWcpYxw68LucTWAW3FaRCvaMTNdouCTDFTLWpbb6jrzxmhKYhnU2Of2g6bfsc0FtnbcpoCR/idAtCHFPlCCK3TpbJ8mWtL91PNKKY/kIk1DN8FEY3NRZCns7WaSuHzb8+ClZOtbpberhEL/zSg2vUjn2s6Wx+7Eo7SDJy4UMnPBJ1tK/G+PCozmaIUNb+lrqx+0kCVVdluqSu81Hr0AuQWbjMwZmue1rIxsxkcgGR/8KP0974Y0iqOlBW49W3EuXbp0BYrPVK8W+lpmIcpmiIC89nvAAkyo3Kw9FeoLr5o99lS0mQAz7wpXE/cmxyL6xSswa3Rz5cW+s/kTuhu56MQdFtYJYUfnEgwt/rv9dYvz8NXWyf7Kp8F1CandiywSPlE=

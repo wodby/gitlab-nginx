@@ -1,17 +1,17 @@
 -include env_make
 
-GITLAB_VER ?= 10.2.3
+GITLAB_VER ?= 10.3.7
 NGINX_VER ?= 1.13
 
-GITLAB_MAJOR_VER ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+\.[0-9]+?')
+GITLAB_MAJOR_VER ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+')
 TAG ?= $(GITLAB_MAJOR_VER)-$(NGINX_VER)
 
-FROM_TAG = $(NGINX_VER)
+BASE_IMAGE_TAG = $(NGINX_VER)
 REPO = wodby/gitlab-nginx
 NAME = gitlab-$(GITLAB_VER)-nginx-$(NGINX_VER)
 
-ifneq ($(FROM_STABILITY_TAG),)
-    FROM_TAG := $(FROM_TAG)-$(FROM_STABILITY_TAG)
+ifneq ($(BASE_IMAGE_STABILITY_TAG),)
+    BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_STABILITY_TAG)
 endif
 
 ifneq ($(STABILITY_TAG),)
@@ -25,10 +25,10 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg FROM_TAG=$(FROM_TAG) --build-arg GITLAB_VER=$(GITLAB_VER) ./
+	docker build -t $(REPO):$(TAG) --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) --build-arg GITLAB_VER=$(GITLAB_VER) ./
 
 test:
-	IMAGE=$(REPO):$(TAG) ./test.sh
+	GITLAB_MAJOR_VER=$(GITLAB_MAJOR_VER) IMAGE=$(REPO):$(TAG) ./test.sh
 
 push:
 	docker push $(REPO):$(TAG)

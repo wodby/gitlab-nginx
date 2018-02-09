@@ -2,7 +2,7 @@ version: "2"
 
 services:
   pages:
-    image: wodby/gitlab
+    image: wodby/gitlab:$GITLAB_MAJOR_VER
     environment:
       GITLAB_PAGES_DOMAIN: pages.gitlab.loc
     command: /etc/init.d/pages
