@@ -7,26 +7,16 @@ env:
   global:
     - LATEST_TAG=10-1.13
   matrix:
-    - GITLAB_VER=10.2.3 NGINX_VER=1.13 TAG=10-1.13
+    - GITLAB_VER=10.4.3 NGINX_VER=1.13 TAG=10-1.13
 
 script:
-  - |
-    make
-    make test
+  - set -e
+  - make compare-orig-configs
+  - make
+  - make test
 
-    if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-      docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-
-      if [[ -n "${TRAVIS_TAG}" ]]; then
-        export STABILITY_TAG="${TRAVIS_TAG}"
-      fi
-
-      make release
-
-      if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-        make release TAG="latest"
-      fi
-    fi
+after_success:
+  - bash "${TRAVIS_BUILD_DIR}/travis-release.sh"
 
 notifications:
   slack:

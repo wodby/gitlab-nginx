@@ -10,6 +10,8 @@ compose() {
     docker-compose -f test/docker-compose.yml "${@}"
 }
 
+# TODO: install and test gitlab endpoints
+
 echo "OK"
 #compose up -d
 #compose exec nginx make check-ready -f /usr/local/bin/actions.mk

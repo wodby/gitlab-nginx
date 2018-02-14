@@ -1,6 +1,6 @@
 -include env_make
 
-GITLAB_VER ?= 10.3.7
+GITLAB_VER ?= 10.4.3
 NGINX_VER ?= 1.13
 
 GITLAB_MAJOR_VER ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+')
@@ -47,6 +47,12 @@ stop:
 
 logs:
 	docker logs $(NAME)
+
+compare-orig-configs:
+	docker run --rm \
+		-v $(PWD)/compare-orig-configs.sh:/usr/local/bin/compare-orig-configs.sh \
+		-v $(PWD)/orig:/orig \
+		wodby/alpine compare-orig-configs.sh $(GITLAB_VER)
 
 clean:
 	-docker rm -f $(NAME)
