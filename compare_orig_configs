@@ -11,8 +11,8 @@ gitlab_ver=$1
 url="https://gitlab.com/gitlab-org/gitlab-ce/raw/v${gitlab_ver}"
 
 array=(
-    "gitlab::${url}/lib/support/nginx/gitlab"
-    "gitlab-pages::${url}/lib/support/nginx/gitlab-pages"
+    "./orig/gitlab::${url}/lib/support/nginx/gitlab"
+    "./orig/gitlab-pages::${url}/lib/support/nginx/gitlab-pages"
 )
 
 outdated=0
