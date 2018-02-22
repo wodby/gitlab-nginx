@@ -6,9 +6,9 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-compose() {
-    docker-compose -f test/docker-compose.yml "${@}"
-}
+#compose() {
+#    docker-compose -f test/docker-compose.yml "${@}"
+#}
 
 # TODO: install and test gitlab endpoints
 

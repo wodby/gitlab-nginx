@@ -7,7 +7,7 @@ env:
   global:
     - LATEST_TAG=10-1.13
   matrix:
-    - GITLAB_VER=10.4.3 NGINX_VER=1.13 TAG=10-1.13
+    - GITLAB_VER=10.4.4 NGINX_VER=1.13 TAG=10-1.13
 
 script:
   - set -e
@@ -16,10 +16,4 @@ script:
   - make test
 
 after_success:
-  - bash "${TRAVIS_BUILD_DIR}/travis-release.sh"
-
-notifications:
-  slack:
-    on_failure: never
-    secure: |
-      ktnsawH72pRk0SohLvrru51xfufiiqUMhJa1wNafBbkjVgjxPnjcEap5khqTQ/7ciFk4SkkJ7oBAdEsS/IQcNWaMyIWRlwz8u5CGGhntJNwFHEnAWYSbOY/oV55A8HSQxfwiTtZJlYp8pDpno1SmRw2bybpz6OspINWpBItbQudfHzlD1aO02xSXvAfOf1saRG1CBv66NXTlcxEmGB3+rN9Y0fA6ZWjvb9h6j8rPddIpLo6ouFEbU/hJyFl2474kspddawVnnZMBnrdgcdlWVcamIJPW/tN8NeZC2Ghq6gWcpYxw68LucTWAW3FaRCvaMTNdouCTDFTLWpbb6jrzxmhKYhnU2Of2g6bfsc0FtnbcpoCR/idAtCHFPlCCK3TpbJ8mWtL91PNKKY/kIk1DN8FEY3NRZCns7WaSuHzb8+ClZOtbpberhEL/zSg2vUjn2s6Wx+7Eo7SDJy4UMnPBJ1tK/G+PCozmaIUNb+lrqx+0kCVVdluqSu81Hr0AuQWbjMwZmue1rIxsxkcgGR/8KP0974Y0iqOlBW49W3EuXbp0BYrPVK8W+lpmIcpmiIC89nvAAkyo3Kw9FeoLr5o99lS0mQAz7wpXE/cmxyL6xSswa3Rz5cW+s/kTuhu56MQdFtYJYUfnEgwt/rv9dYvz8NXWyf7Kp8F1CandiywSPlE=
+  - bash "${TRAVIS_BUILD_DIR}/travis_release"

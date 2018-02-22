@@ -1,14 +1,14 @@
 -include env_make
 
-GITLAB_VER ?= 10.4.3
+GITLAB_VER ?= 10.4.4
 NGINX_VER ?= 1.13
 
-GITLAB_MAJOR_VER ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+')
-TAG ?= $(GITLAB_MAJOR_VER)-$(NGINX_VER)
+GITLAB_VER_MAJOR ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+')
+TAG ?= $(GITLAB_VER_MAJOR)-$(NGINX_VER)
 
 BASE_IMAGE_TAG = $(NGINX_VER)
 REPO = wodby/gitlab-nginx
-NAME = gitlab-$(GITLAB_VER)-nginx-$(NGINX_VER)
+NAME = gitlab-$(GITLAB_VER_MAJOR)-nginx-$(NGINX_VER)
 
 ifneq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_STABILITY_TAG)
@@ -28,7 +28,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) --build-arg GITLAB_VER=$(GITLAB_VER) ./
 
 test:
-	GITLAB_MAJOR_VER=$(GITLAB_MAJOR_VER) IMAGE=$(REPO):$(TAG) ./test.sh
+	cd ./test && ./test
 
 push:
 	docker push $(REPO):$(TAG)
@@ -49,10 +49,7 @@ logs:
 	docker logs $(NAME)
 
 compare-orig-configs:
-	docker run --rm \
-		-v $(PWD)/compare-orig-configs.sh:/usr/local/bin/compare-orig-configs.sh \
-		-v $(PWD)/orig:/orig \
-		wodby/alpine compare-orig-configs.sh $(GITLAB_VER)
+	./compare_orig_configs $(GITLAB_VER)
 
 clean:
 	-docker rm -f $(NAME)
