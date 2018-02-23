@@ -12,7 +12,7 @@ ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/500.html /
 ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/502.html /etc/nginx/gitlab/
 ADD https://gitlab.com/gitlab-org/gitlab-ce/raw/v${GITLAB_VER}/public/503.html /etc/nginx/gitlab/
 
-COPY templates/gitlab.conf.tpl /etc/gotpl/vhost.tpl
+COPY templates/gitlab.conf.tpl /etc/gotpl/vhost.conf.tpl
 COPY templates/gitlab-pages.conf.tpl /etc/gotpl/gitlab-pages.conf.tpl
 
 COPY init /docker-entrypoint-init.d/
