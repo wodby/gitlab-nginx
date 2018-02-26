@@ -1,6 +1,6 @@
 -include env_make
 
-GITLAB_VER ?= 10.4.4
+GITLAB_VER ?= 10.5.1
 NGINX_VER ?= 1.13
 
 GITLAB_VER_MAJOR ?= $(shell echo "${GITLAB_VER}" | grep -oE '^[0-9]+')
